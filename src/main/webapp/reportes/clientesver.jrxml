@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a900a4f3-6e3f-4f91-874c-43ce35e2d890">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HOLA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     id AS clientes_idcliente,
+     nombre AS clientes_Nombres,
+     apellido AS clientes_Apellidos,
+     direccion AS clientes_Direccion,
+     email AS clientes_Correo
+FROM
+     clientes
+WHERE
+	id=$P{CODIGO}]]>
+	</queryString>
+	<field name="clientes_idcliente" class="java.lang.Integer"/>
+	<field name="clientes_nombres" class="java.lang.String"/>
+	<field name="clientes_apellidos" class="java.lang.String"/>
+	<field name="clientes_direccion" class="java.lang.String"/>
+	<field name="clientes_correo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="118" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="8" width="555" height="1" uuid="eef3935f-0f19-4148-849a-665ac82033bd"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="107" width="555" height="1" uuid="275a7f9d-a81e-4424-bc23-120fc866a35c"/>
+			</line>
+			<staticText>
+				<reportElement x="75" y="23" width="424" height="35" uuid="80c11b04-f5ef-4a2b-9344-5494cf2077ad"/>
+				<textElement textAlignment="Center">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE CON PARAMETROS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="58" width="183" height="34" uuid="ccf2d669-5f25-4ad9-ad2a-5e600ec21446"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POSTGRESQL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="281" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="49" y="46" width="467" height="165" uuid="1e068b29-3317-46b5-866c-d8fccfe0b4aa"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="101" y="140" width="139" height="20" uuid="8defb5c2-2357-4517-b78e-1c78aa3b1271"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CORREO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="80" width="139" height="20" uuid="1bf64277-bf84-4c32-8002-e1949bea1687"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="100" width="139" height="20" uuid="0ea85658-cd86-4f9e-b112-e38c39dd2efd"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APELLIDOS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="120" width="139" height="20" uuid="9f86c7a0-2267-4170-b257-96b741b89690"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCION:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="268" y="14" width="100" height="20" uuid="eacda996-1d1d-45ae-88d7-5544c97852c4"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CODIGO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="101" y="14" width="165" height="20" uuid="3be23bbd-e565-4c43-afc1-207e37979451"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO DEL CLIENTE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="242" y="80" width="100" height="20" uuid="000f2e7a-0f2c-42e3-beb3-24f123c11673"/>
+				<textFieldExpression><![CDATA[$F{clientes_nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="242" y="100" width="100" height="20" uuid="5132a454-6366-422f-a36a-62dca263e120"/>
+				<textFieldExpression><![CDATA[$F{clientes_apellidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="242" y="120" width="100" height="20" uuid="7ae105e7-c06e-4bbb-8991-f7da9ed4a96e"/>
+				<textFieldExpression><![CDATA[$F{clientes_direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="140" width="100" height="20" uuid="5b608e5d-fe7e-42d5-b838-8898a317d604"/>
+				<textFieldExpression><![CDATA[$F{clientes_correo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="516" y="6" width="36" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="c71dee39-62df-46b9-9feb-cb851fac3892"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="342" y="6" width="170" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="0fab9165-e5c0-413f-b13f-58e215734613"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="1" y="6" width="209" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="e53d665e-a396-4ba3-8e89-f90e33a2e85b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

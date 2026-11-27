@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="RankingClientes" pageWidth="595" pageHeight="842"
+              columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+
+    <parameter name="FECHA_DESDE" class="java.lang.String"/>
+    <parameter name="FECHA_HASTA" class="java.lang.String"/>
+
+    <queryString>
+        <![CDATA[
+            SELECT c.nombre AS cliente, COALESCE(c.documento,'') AS ruc,
+                   COUNT(DISTINCT v.id) AS cantidad_ventas,
+                   COALESCE(SUM(COALESCE(dv.subtotal, dv.precio * dv.cantidad)),0) AS monto_total
+            FROM ventas v
+            JOIN clientes c ON v.idcliente = c.id
+            JOIN venta_detalle dv ON dv.idventa = v.id
+            WHERE v.estado = 'FINALIZADO'
+              AND ($P{FECHA_DESDE} IS NULL OR $P{FECHA_DESDE} = '' OR v.fecha >= CAST($P{FECHA_DESDE} AS DATE))
+              AND ($P{FECHA_HASTA} IS NULL OR $P{FECHA_HASTA} = '' OR v.fecha <= CAST($P{FECHA_HASTA} AS DATE))
+            GROUP BY c.id, c.nombre, c.documento
+            ORDER BY monto_total DESC, cantidad_ventas DESC
+        ]]>
+    </queryString>
+
+    <field name="cliente" class="java.lang.String"/>
+    <field name="ruc" class="java.lang.String"/>
+    <field name="cantidad_ventas" class="java.lang.Long"/>
+    <field name="monto_total" class="java.math.BigDecimal"/>
+
+    <variable name="POSICION" class="java.lang.Integer" calculation="Count">
+        <variableExpression><![CDATA[1]]></variableExpression>
+    </variable>
+
+    <title>
+        <band height="70">
+            <staticText>
+                <reportElement x="20" y="10" width="555" height="25"/>
+                <textElement textAlignment="Center"><font size="16" isBold="true"/></textElement>
+                <text><![CDATA[CLIENTIX - RANKING DE VENTAS POR CLIENTE]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="20" y="40" width="555" height="18"/>
+                <textElement textAlignment="Center"><font size="10"/></textElement>
+                <textFieldExpression><![CDATA["Periodo: " + ($P{FECHA_DESDE} == null || $P{FECHA_DESDE}.equals("") ? "Inicio" : $P{FECHA_DESDE}) + "  al  " + ($P{FECHA_HASTA} == null || $P{FECHA_HASTA}.equals("") ? "Hoy" : $P{FECHA_HASTA})]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="22">
+            <staticText><reportElement x="40" y="2" width="40" height="16"/><textElement><font size="9" isBold="true"/></textElement><text><![CDATA[#]]></text></staticText>
+            <staticText><reportElement x="90" y="2" width="180" height="16"/><textElement><font size="9" isBold="true"/></textElement><text><![CDATA[Cliente]]></text></staticText>
+            <staticText><reportElement x="280" y="2" width="100" height="16"/><textElement><font size="9" isBold="true"/></textElement><text><![CDATA[RUC]]></text></staticText>
+            <staticText><reportElement x="390" y="2" width="70" height="16"/><textElement textAlignment="Center"><font size="9" isBold="true"/></textElement><text><![CDATA[Cant. ventas]]></text></staticText>
+            <staticText><reportElement x="470" y="2" width="85" height="16"/><textElement textAlignment="Right"><font size="9" isBold="true"/></textElement><text><![CDATA[Monto total]]></text></staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="18">
+            <textField evaluationTime="Now"><reportElement x="40" y="1" width="40" height="15"/><textElement><font size="9" isBold="true"/></textElement><textFieldExpression><![CDATA[$V{POSICION}]]></textFieldExpression></textField>
+            <textField><reportElement x="90" y="1" width="180" height="15"/><textElement><font size="9"/></textElement><textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression></textField>
+            <textField><reportElement x="280" y="1" width="100" height="15"/><textElement><font size="9"/></textElement><textFieldExpression><![CDATA[$F{ruc}]]></textFieldExpression></textField>
+            <textField><reportElement x="390" y="1" width="70" height="15"/><textElement textAlignment="Center"><font size="9"/></textElement><textFieldExpression><![CDATA[$F{cantidad_ventas}]]></textFieldExpression></textField>
+            <textField pattern="#,##0"><reportElement x="470" y="1" width="85" height="15"/><textElement textAlignment="Right"><font size="9"/></textElement><textFieldExpression><![CDATA[$F{monto_total}]]></textFieldExpression></textField>
+        </band>
+    </detail>
+
+    <pageFooter>
+        <band height="20">
+            <textField pattern="dd/MM/yyyy HH:mm"><reportElement x="20" y="3" width="150" height="14"/><textElement><font size="8"/></textElement><textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression></textField>
+            <staticText><reportElement x="200" y="3" width="200" height="14"/><textElement textAlignment="Center"><font size="8"/></textElement><text><![CDATA[CLIENTIX CRM]]></text></staticText>
+            <textField><reportElement x="420" y="3" width="135" height="14"/><textElement textAlignment="Right"><font size="8"/></textElement><textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression></textField>
+        </band>
+    </pageFooter>
+</jasperReport>
